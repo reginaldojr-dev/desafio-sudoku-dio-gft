@@ -37,8 +37,17 @@ public class Board {
     }
 
     public boolean isComplete() {
-        return false;
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (values[row][col] == 0) {
+                    return false;
+                }
+            }
+        }
+        return isValidBoard();
     }
+
+
 
     public boolean isValidMove(int row, int col, int value) {
         if (value < 1 || value > 9) return false;
