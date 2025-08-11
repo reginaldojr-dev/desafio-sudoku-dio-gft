@@ -68,10 +68,19 @@ public class Board {
 
 
     public boolean set(int row, int col, int value) {
-        return false;
+        if (fixed[row][col]) return false;
+        if (!isValidMove(row, col, value)) return false;
+
+        values[row][col] = value;
+        return true;
     }
 
     public boolean clear(int row, int col) {
-        return false;
+        if (fixed[row][col]) return false;
+
+        values[row][col] = 0;
+        return true;
     }
+
+
 }
