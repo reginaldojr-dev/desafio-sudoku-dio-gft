@@ -42,10 +42,6 @@ public class Board {
 
 
 
-    public boolean[][] snapshotFixed() {
-        return fixed;
-    }
-
     public boolean isValidBoard() {
         // Verifica linhas
         for (int row = 0; row < 9; row++) {
