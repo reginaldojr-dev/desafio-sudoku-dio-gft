@@ -25,8 +25,22 @@ public class Board {
     }
 
     public int[][] snapshotValues() {
-        return values;
+        int[][] copy = new int[9][9];
+        for (int row = 0; row < 9; row++) {
+            System.arraycopy(values[row], 0, copy[row], 0, 9);
+        }
+        return copy;
     }
+
+    public boolean[][] snapshotFixed() {
+        boolean[][] copy = new boolean[9][9];
+        for (int row = 0; row < 9; row++) {
+            System.arraycopy(fixed[row], 0, copy[row], 0, 9);
+        }
+        return copy;
+    }
+
+
 
     public boolean[][] snapshotFixed() {
         return fixed;
