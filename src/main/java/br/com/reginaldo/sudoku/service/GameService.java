@@ -29,17 +29,15 @@ public class GameService {
         int row = coord.row();
         int col = coord.col();
 
-        // Verifica linha
+        // Linha
         for (int c = 0; c < 9; c++) {
             if (board.getValue(row, c) == value) return false;
         }
-
-        // Verifica coluna
+        // Coluna
         for (int r = 0; r < 9; r++) {
             if (board.getValue(r, col) == value) return false;
         }
-
-        // Verifica bloco 3x3
+        // Bloco 3x3
         int startRow = (row / 3) * 3;
         int startCol = (col / 3) * 3;
         for (int r = startRow; r < startRow + 3; r++) {
@@ -47,7 +45,6 @@ public class GameService {
                 if (board.getValue(r, c) == value) return false;
             }
         }
-
         return true;
     }
 
@@ -69,5 +66,23 @@ public class GameService {
 
     public boolean[][] getFixedSnapshot() {
         return board.snapshotFixed();
+    }
+
+    // Imprime o tabuleiro formatado
+    public void printBoard() {
+        int[][] values = board.snapshotValues();
+        System.out.println();
+        for (int r = 0; r < 9; r++) {
+            if (r % 3 == 0) {
+                System.out.println("+-------+-------+-------+");
+            }
+            for (int c = 0; c < 9; c++) {
+                if (c % 3 == 0) System.out.print("| ");
+                int val = values[r][c];
+                System.out.print(val == 0 ? ". " : (val + " "));
+            }
+            System.out.println("|");
+        }
+        System.out.println("+-------+-------+-------+\n");
     }
 }
