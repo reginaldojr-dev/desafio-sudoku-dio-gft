@@ -33,8 +33,50 @@ public class Board {
     }
 
     public boolean isValidBoard() {
-        return false;
+        // Verifica linhas
+        for (int row = 0; row < 9; row++) {
+            boolean[] seen = new boolean[10];
+            for (int col = 0; col < 9; col++) {
+                int val = values[row][col];
+                if (val != 0) {
+                    if (seen[val]) return false;
+                    seen[val] = true;
+                }
+            }
+        }
+
+        // Verifica colunas
+        for (int col = 0; col < 9; col++) {
+            boolean[] seen = new boolean[10];
+            for (int row = 0; row < 9; row++) {
+                int val = values[row][col];
+                if (val != 0) {
+                    if (seen[val]) return false;
+                    seen[val] = true;
+                }
+            }
+        }
+
+        // Verifica blocos 3x3
+        for (int blockRow = 0; blockRow < 3; blockRow++) {
+            for (int blockCol = 0; blockCol < 3; blockCol++) {
+                boolean[] seen = new boolean[10];
+                for (int row = blockRow * 3; row < blockRow * 3 + 3; row++) {
+                    for (int col = blockCol * 3; col < blockCol * 3 + 3; col++) {
+                        int val = values[row][col];
+                        if (val != 0) {
+                            if (seen[val]) return false;
+                            seen[val] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
     }
+
+
 
     public boolean isComplete() {
         for (int row = 0; row < 9; row++) {
