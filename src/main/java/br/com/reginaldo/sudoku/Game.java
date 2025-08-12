@@ -45,7 +45,7 @@ public class Game {
                 break;
             }
 
-            System.out.print("Sua jogada: ");
+            System.out.print("Digite sua jogada (linha coluna valor) 0 = limpar, q = sair: ");
             String line = sc.nextLine().trim();
 
             if (line.equalsIgnoreCase("q")) {

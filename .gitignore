@@ -1,0 +1,21 @@
+# Arquivos de build
+/out/
+target/
+build/
+
+# Logs
+*.log
+
+# Configurações locais da IntelliJ IDEA
+.idea/*
+!.idea/codeStyles
+!.idea/inspectionProfiles
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Cache e temporários
+*.class
+*.tmp
+*.swp
