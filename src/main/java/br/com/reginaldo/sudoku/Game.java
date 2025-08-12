@@ -10,25 +10,35 @@ public class Game {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[][] start = {
-                {0,0,0, 2,6,0, 7,0,1},
-                {6,8,0, 0,7,0, 0,9,0},
-                {1,9,0, 0,0,4, 5,0,0},
-
-                {8,2,0, 1,0,0, 0,4,0},
-                {0,0,4, 6,0,2, 9,0,0},
-                {0,5,0, 0,0,3, 0,2,8},
-
-                {0,0,9, 3,0,0, 0,7,4},
-                {0,4,0, 0,5,0, 0,3,6},
-                {7,0,3, 0,1,8, 0,0,0}
-        };
-
+        int[][] start = new int[9][9];
         boolean[][] fixed = new boolean[9][9];
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                fixed[r][c] = start[r][c] != 0;
+
+        if (args != null && args.length > 0) {
+            int count = loadFromArgs(args, start, fixed);
+            System.out.println("Carregado via argumentos: " + count + " posições definidas.\n");
+        } else {
+            int[][] defaultStart = {
+                    {0,0,0, 2,6,0, 7,0,1},
+                    {6,8,0, 0,7,0, 0,9,0},
+                    {1,9,0, 0,0,4, 5,0,0},
+
+                    {8,2,0, 1,0,0, 0,4,0},
+                    {0,0,4, 6,0,2, 9,0,0},
+                    {0,5,0, 0,0,3, 0,2,8},
+
+                    {0,0,9, 3,0,0, 0,7,4},
+                    {0,4,0, 0,5,0, 0,3,6},
+                    {7,0,3, 0,1,8, 0,0,0}
+            };
+            boolean[][] defaultFixed = new boolean[9][9];
+            for (int r = 0; r < 9; r++) {
+                for (int c = 0; c < 9; c++) {
+                    defaultFixed[r][c] = defaultStart[r][c] != 0;
+                }
             }
+            start = defaultStart;
+            fixed = defaultFixed;
+            System.out.println("Sem argumentos: usando puzzle padrão.\n");
         }
 
         Board board = new Board(start, fixed);
@@ -81,6 +91,32 @@ public class Game {
         }
 
         sc.close();
+    }
+
+    private static int loadFromArgs(String[] args, int[][] start, boolean[][] fixed) {
+        String all = String.join(" ", args).trim();
+        if (all.isEmpty()) return 0;
+        String[] tokens = all.split("\\s+");
+        int count = 0;
+        for (String tok : tokens) {
+            try {
+                String[] parts = tok.split(";");
+                if (parts.length != 2) continue;
+                String[] rc = parts[0].split(",");
+                String[] vf = parts[1].split(",");
+                if (rc.length != 2 || vf.length != 2) continue;
+                int r = Integer.parseInt(rc[0].trim());
+                int c = Integer.parseInt(rc[1].trim());
+                int v = Integer.parseInt(vf[0].trim());
+                boolean f = Boolean.parseBoolean(vf[1].trim());
+                if (r < 0 || r > 8 || c < 0 || c > 8 || v < 0 || v > 9) continue;
+                if (v == 0 && f) f = false;
+                start[r][c] = v;
+                fixed[r][c] = f;
+                count++;
+            } catch (Exception ignored) {}
+        }
+        return count;
     }
 
     private static Integer parseIndex(String s) {
